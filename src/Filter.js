@@ -1,8 +1,12 @@
 import React from 'react'
 
-const Filter = () => {
+const Filter = ({searchRate,searchTitle,handleSearch}) => {
   return (
-    <div>Filter</div>
+    <div>
+      <input placeholder='search by title' ref={searchTitle}></input>
+      <input placeholder='search by rate' ref={searchRate}></input>
+      <button onClick={handleSearch}>Search</button>
+    </div>
   )
 }
 

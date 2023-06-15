@@ -1,6 +1,6 @@
 import './App.css';
 import MovieList from './MovieList';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import Filter from './Filter';
 
 function App() {
@@ -23,10 +23,36 @@ function App() {
       }
     ]
   )
+  const [Stitle, setStitle]=useState("")
+  const [Srate,setRate]=useState(0)
+  const title= useRef()
+  const description=useRef()
+  const posterURL=useRef()
+  const rating=useRef()
+  
+  const searchTitle=useRef()
+  const searchRate =useRef()
+  const handleSearch=()=>{
+    setStitle(searchTitle.current.value)
+    setRate(searchRate.current.value)
+  }
+  const handleadd=()=>{
+    setmovies([...movies,{title:title.current.value,
+    description:description.current.value,
+    posterURL:posterURL.current.value,
+    rating:rating.current.value}])
+  }
   return (
     <div className="App">
-      <Filter/>
-      <MovieList movies={movies}/>
+      <div>
+        <input placeholder='title' ref={title}></input>
+        <input placeholder='description' ref={description}></input>
+        <input placeholder='posterUrl' ref={posterURL}></input>
+        <input placeholder='rating' ref={rating}></input>
+        <button onClick={handleadd}>Add movie</button>
+      </div>
+      <Filter searchRate={searchRate} searchTitle={searchTitle} handleSearch={handleSearch}/>
+      <MovieList movies={movies.filter(element=> element.title.toLowerCase().trim().includes(Stitle.toLowerCase().trim()) && element.rating>=Srate)}/>
     </div>
   );
 }
